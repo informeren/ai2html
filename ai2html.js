@@ -246,7 +246,15 @@ var fonts = [
   {"aifont":"Stymie-Thin","family":"nyt-stymie,arial,helvetica,sans-serif","weight":"300","style":""},
   {"aifont":"Stymie-UltraLight","family":"nyt-stymie,arial,helvetica,sans-serif","weight":"300","style":""},
   {"aifont":"NYTMagSans-Regular","family":"'nyt-mag-sans',arial,helvetica,sans-serif","weight":"500","style":""},
-  {"aifont":"NYTMagSans-Bold","family":"'nyt-mag-sans',arial,helvetica,sans-serif","weight":"700","style":""}
+  {"aifont":"NYTMagSans-Bold","family":"'nyt-mag-sans',arial,helvetica,sans-serif","weight":"700","style":""},
+  {"aifont":"iGrotesk-Light","family":"'franklin-gothic-urw', Helvetica, Arial, sans-serif","weight":"200","style":""},
+  {"aifont":"iGroteskCond-Reg","family":"'franklin-gothic-urw', Helvetica, Arial, sans-serif","weight":"400","style":""},
+  {"aifont":"iGrotesk-Regular","family":"'franklin-gothic-urw', Helvetica, Arial, sans-serif","weight":"400","style":""},
+  {"aifont":"iGrotesk-RegularItalic","family":"'franklin-gothic-urw', Helvetica, Arial, sans-serif","weight":"400","style":"italic"},
+  {"aifont":"iGrotesk-Medium","family":"'franklin-gothic-urw', Helvetica, Arial, sans-serif","weight":"500","style":""},
+  {"aifont":"iGrotesk-Bold","family":"'franklin-gothic-urw', Helvetica, Arial, sans-serif","weight":"700","style":""},
+  {"aifont":"iText-Regular","family":"'meta-serif', Helvetica, Arial, sans-serif","weight":"500","style":""},
+  {"aifont":"iGroteskCond-SmBd","family":"'franklin-gothic-urw', Helvetica, Arial, sans-serif","weight":"500","style":""}
 ];
 
 // CSS text-transform equivalents
@@ -569,7 +577,7 @@ function render() {
   pBar = new ProgressBar({name: "Ai2html progress", steps: calcProgressBarSteps()});
   unlockObjects(); // Unlock containers and clipping masks
   var masks = findMasks(); // identify all clipping masks and their contents
-  var artboardContent = {html: "", css: "", js: ""};
+  var artboardContent = {head: "", html: "", css: "", js: ""};
 
   forEachUsableArtboard(function(activeArtboard, abNumber) {
     var abSettings = getArtboardSettings(activeArtboard);
@@ -604,6 +612,14 @@ function render() {
     //=====================================
     // finish generating artboard HTML and CSS
     //=====================================
+
+    // generate iframely <link> element
+    var rect = convertAiBounds(activeArtboard.artboardRect);
+    if (rect.width != rect.height) {
+      // TODO: figure out a way to name documents consistently
+      var mq = '(aspect-ratio: ' + rect.width + ':' + rect.height + ')';
+      artboardContent.head += '<link rel="iframely player" href="https://data.information.dk/upload/grafik/2017/10/' + docName + '" type="text/html" title="' + docName + '" media="' + mq + '"/>';
+    }
 
     artboardContent.html += "\r\t<!-- Artboard: " + getArtboardName(activeArtboard) + " -->\r" +
        generateArtboardDiv(activeArtboard, breakpoints, docSettings) +
@@ -1492,6 +1508,7 @@ function getArtboardInfo() {
     artboards.push({
       name: ab.name || "",
       width: pos.width,
+      height: pos.height,
       effectiveWidth: abSettings.width || pos.width,
       id: i
     });
@@ -3036,12 +3053,15 @@ function generateOutputHtml(content, pageName, settings) {
     if (js) js ='<!-- SCOOP JS -->\r' + commentBlock + js;
   }
 
-  textForFile = css + '\r' + html + '\r' + js;
+  var htmlHeader = '<html><head>' + content.head + '\r' + css + '\r' + '</head><body>';
+  var htmlFooter = '</body></html>';
 
-  if (scriptEnvironment != "nyt") {
-    textForFile = commentBlock + textForFile +
-        "<!-- End ai2html" + " - " + getDateTimeStamp() + " -->\r";
-  }
+  textForFile = htmlHeader + '\r' + commentBlock + '\r' + html + '\r' + js + '\r' + htmlFooter;
+
+//  if (scriptEnvironment != "nyt") {
+//    textForFile = commentBlock + textForFile +
+//        "<!-- End ai2html" + " - " + getDateTimeStamp() + " -->\r";
+//  }
 
   textForFile = applyTemplate(textForFile, settings);
   htmlFileDestinationFolder = docPath + settings.html_output_path;
