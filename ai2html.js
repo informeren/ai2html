@@ -3053,10 +3053,28 @@ function generateOutputHtml(content, pageName, settings) {
     if (js) js ='<!-- SCOOP JS -->\r' + commentBlock + js;
   }
 
-  var htmlHeader = '<html><head>' + content.head + '\r' + css + '\r' + '</head><body>';
-  var htmlFooter = '</body></html>';
+  var htmlHeader = '<!DOCTYPE html>\
+<html class="no-js">\
+  <head>\
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />\
+    <meta name="viewport" content="width=device-width, initial-scale=1" />\
+';
+  htmlHeader += content.head + '\r' + css + '\r' + '\n<title>ai2HTML</title>\n</head>\n<body>\n';
+  var htmlFooter = '\
+  </body>\
+</html>\
+  ';
 
-  textForFile = htmlHeader + '\r' + commentBlock + '\r' + html + '\r' + js + '\r' + htmlFooter;
+  var inlineCSS = '\
+<style type="text/css" media="screen,print">\
+  .g-artboard {\
+    margin:0 auto;\
+  }\
+</style>\
+';
+
+  textForFile = htmlHeader + '\r' + commentBlock + '\r' + inlineCSS + html + '\r' + js + '\r' + htmlFooter;
 
 //  if (scriptEnvironment != "nyt") {
 //    textForFile = commentBlock + textForFile +
