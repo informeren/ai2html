@@ -3067,6 +3067,8 @@ function generateOutputHtml(content, pageName, settings) {
   ';
 
   var inlineCSS = '\
+<link rel="iframely player" href="https://data.information.dk/upload/grafik/2017/10/ai2html-default" type="text/html" title="ai2html-default" media="(aspect-ratio: 700:400)"/>
+<script src="https://data.information.dk/upload/grafik/resizer.js"></script>\
 <style type="text/css" media="screen,print">\
   .g-artboard {\
     margin:0 auto;\
