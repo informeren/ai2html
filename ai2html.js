@@ -1,4 +1,4 @@
-// ai2html.js
+:// ai2html.js
 
 function main() {
 // Enclosing scripts in a named function (and not an anonymous, self-executing
@@ -613,12 +613,16 @@ function render() {
     // finish generating artboard HTML and CSS
     //=====================================
 
+    var pubDate = new Date();
+    var year  = pubDate.getFullYear();
+    var month = zeroPad(pubDate.getMonth() + 1, 2);
+
     // generate iframely <link> element
     var rect = convertAiBounds(activeArtboard.artboardRect);
     if (rect.width != rect.height) {
       // TODO: figure out a way to name documents consistently
       var mq = '(aspect-ratio: ' + rect.width + ':' + rect.height + ')';
-      artboardContent.head += '<link rel="iframely player" href="https://data.information.dk/upload/grafik/2017/10/' + docName + '" type="text/html" title="' + docName + '" media="' + mq + '"/>';
+      artboardContent.head += '<link rel="iframely player" href="https://data.information.dk/upload/grafik/' + year + '/' + month + '/' + docName + '/" type="text/html" title="' + docName + '" media="' + mq + '"/>';
     }
 
     artboardContent.html += "\r\t<!-- Artboard: " + getArtboardName(activeArtboard) + " -->\r" +
@@ -2465,9 +2469,10 @@ function convertAreaTextPath(frame) {
 // ab: artboard (assumed to be the active artboard)
 // textFrames:  text frames belonging to the active artboard
 function captureArtboardImage(ab, textFrames, masks, settings) {
+  var docName = docSettings.project_name || doc.name.replace(/(.+)\.[aieps]+$/,"$1").replace(/ +/g,"-");
   var docArtboardName = getArtboardFullName(ab);
-  var imageDestinationFolder = docPath + settings.html_output_path + settings.image_output_path;
-  var imageDestination = imageDestinationFolder + docArtboardName;
+  var imageDestinationFolder = docPath + docName;
+  var imageDestination = imageDestinationFolder + '/' + docArtboardName;
   var i;
   checkForOutputFolder(imageDestinationFolder, "image_output_path");
 
@@ -2519,7 +2524,7 @@ function createPromoImage(settings) {
       promoScale       =  PROMO_WIDTH / abPos.width,
       promoW           =  abPos.width * promoScale,
       promoH           =  abPos.height * promoScale,
-      imageDestination =  docPath + docName + "-promo",
+      imageDestination =  docPath + docName + '/' + docName + "-promo",
       promoFormat, tmpPngTransparency;
 
   // Previous file name was more complicated:
@@ -3067,7 +3072,6 @@ function generateOutputHtml(content, pageName, settings) {
   ';
 
   var inlineCSS = '\
-<link rel="iframely player" href="https://data.information.dk/upload/grafik/2017/10/ai2html-default" type="text/html" title="ai2html-default" media="(aspect-ratio: 700:400)"/>
 <script src="https://data.information.dk/upload/grafik/resizer.js"></script>\
 <style type="text/css" media="screen,print">\
   .g-artboard {\
@@ -3084,9 +3088,10 @@ function generateOutputHtml(content, pageName, settings) {
 //  }
 
   textForFile = applyTemplate(textForFile, settings);
-  htmlFileDestinationFolder = docPath + settings.html_output_path;
+  htmlFileDestinationFolder = docPath + pageName;
+
   checkForOutputFolder(htmlFileDestinationFolder, "html_output_path");
-  htmlFileDestination = htmlFileDestinationFolder + pageName + settings.html_output_extension;
+  htmlFileDestination = htmlFileDestinationFolder + "/index.html";
 
   if (settings.output == 'one-file' && previewProjectType == 'ai2html') {
     htmlFileDestination = htmlFileDestinationFolder + "index" + settings.html_output_extension;
