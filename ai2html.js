@@ -2810,6 +2810,8 @@ function generatePageCss(containerId, settings) {
   var t2 = '\t';
   var t3 = '\t\t';
 
+  css += t2 + "body { margin: 0; padding: 0; }\r"
+
   if (!!settings.max_width) {
     css += t2 + "#" + containerId + " {\r";
     css += t3 + "max-width:" + settings.max_width + "px;\r";
