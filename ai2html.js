@@ -247,7 +247,7 @@ var fonts = [
   {"aifont":"Stymie-UltraLight","family":"nyt-stymie,arial,helvetica,sans-serif","weight":"300","style":""},
   {"aifont":"NYTMagSans-Regular","family":"'nyt-mag-sans',arial,helvetica,sans-serif","weight":"500","style":""},
   {"aifont":"NYTMagSans-Bold","family":"'nyt-mag-sans',arial,helvetica,sans-serif","weight":"700","style":""},
-  {"aifont":"iGrotesk-Light","family":"'franklin-gothic-urw', Helvetica, Arial, sans-serif","weight":"200","style":""},
+  {"aifont":"iGrotesk-Light","family":"'franklin-gothic-urw', Helvetica, Arial, sans-serif","weight":"400","style":""},
   {"aifont":"iGroteskCond-Reg","family":"'franklin-gothic-urw', Helvetica, Arial, sans-serif","weight":"400","style":""},
   {"aifont":"iGrotesk-Regular","family":"'franklin-gothic-urw', Helvetica, Arial, sans-serif","weight":"400","style":""},
   {"aifont":"iGrotesk-RegularItalic","family":"'franklin-gothic-urw', Helvetica, Arial, sans-serif","weight":"400","style":"italic"},
