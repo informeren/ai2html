@@ -622,7 +622,7 @@ function render() {
     if (rect.width != rect.height) {
       // TODO: figure out a way to name documents consistently
       var mq = '(aspect-ratio: ' + rect.width + ':' + rect.height + ')';
-      artboardContent.head += '<link rel="iframely player" href="https://data.information.dk/upload/grafik/' + year + '/' + month + '/' + docName + '/" type="text/html" title="' + docName + '" media="' + mq + '"/>';
+      artboardContent.head += '<link rel="iframely app" href="https://data.information.dk/upload/grafik/' + year + '/' + month + '/' + docName + '/" type="text/html" title="' + docName + '" media="' + mq + '"/>';
     }
 
     artboardContent.html += "\r\t<!-- Artboard: " + getArtboardName(activeArtboard) + " -->\r" +
