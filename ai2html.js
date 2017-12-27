@@ -251,6 +251,7 @@ var fonts = [
   {"aifont":"iGroteskCond-Reg","family":"'franklin-gothic-urw', Helvetica, Arial, sans-serif","weight":"400","style":""},
   {"aifont":"iGrotesk-Regular","family":"'franklin-gothic-urw', Helvetica, Arial, sans-serif","weight":"400","style":""},
   {"aifont":"iGrotesk-RegularItalic","family":"'franklin-gothic-urw', Helvetica, Arial, sans-serif","weight":"400","style":"italic"},
+  {"aifont":"iGrotesk-LightItalic","family":"'franklin-gothic-urw', Helvetica, Arial, sans-serif","weight":"400","style":"italic"},
   {"aifont":"iGrotesk-Medium","family":"'franklin-gothic-urw', Helvetica, Arial, sans-serif","weight":"500","style":""},
   {"aifont":"iGrotesk-Bold","family":"'franklin-gothic-urw', Helvetica, Arial, sans-serif","weight":"700","style":""},
   {"aifont":"iText-Regular","family":"'meta-serif', Helvetica, Arial, sans-serif","weight":"500","style":""},
